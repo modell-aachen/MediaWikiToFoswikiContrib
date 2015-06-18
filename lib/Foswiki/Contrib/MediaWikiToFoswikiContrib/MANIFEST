@@ -28,6 +28,7 @@ lib/CPAN/lib/Parse/MediaWikiDump.pm 0644
 lib/Foswiki/Contrib/MediaWikiToFoswikiContrib/Converter.pm 0644
 lib/Foswiki/Contrib/MediaWikiToFoswikiContrib/EmptyPlugin.pm 0644
 lib/Foswiki/Contrib/MediaWikiToFoswikiContrib/FoswikiPedia.pm 0644
+lib/Foswiki/Contrib/MediaWikiToFoswikiContrib/QwikiConverter.pm 0644
 lib/Foswiki/Contrib/MediaWikiToFoswikiContrib.pm 0644
 pub/System/MediaWikiToFoswikiContrib/schenck_logo.gif 0644
 pub/System/MediaWikiToFoswikiContrib/wikiringlogo40x40.png 0644

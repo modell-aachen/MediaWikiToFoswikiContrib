@@ -4,8 +4,17 @@
 #
 # Copy/Rename this file to YourOwnPlugin.pm and rename the package line below
 
-package Foswiki::Contrib::MediaWiki2FoswikiContrib::QwikiConverter;
+package Foswiki::Contrib::MediaWikiToFoswikiContrib::QwikiConverter;
 use strict;
+use Foswiki::Plugins::MediaWikiTablePlugin::Core;
+
+use vars qw($topicFormTemplate);
+
+$topicFormTemplate = <<'HERE';
+%META:FORM{name="Processes.DocumentForm"}%
+%META:FIELD{name="TopicTitle" attributes="" title="<nop>TopicTitle" value="%title%"}%
+%META:FIELD{name="DocumentType" attributes="" title="<nop>DocumentType" value="%type%"}%
+HERE
 
 ##############################################################################
 sub registerHandlers {
@@ -14,10 +23,10 @@ sub registerHandlers {
   #$converter->writeDebug("registering callbacks");
 
   #$converter->registerHandler('init', \&handleInit);
-  #$converter->registerHandler('before', \&handleBefore);
+  $converter->registerHandler('before', \&handleBefore);
   #$converter->registerHandler('title', \&handleTitle);
-  #$converter->registerHandler('after', \&handleAfter);
-  $converter->registerHandler('final', \&handleFinal);
+  $converter->registerHandler('after', \&handleAfter);
+  #$converter->registerHandler('final', \&handleFinal);
 }
 
 ##############################################################################
@@ -49,25 +58,45 @@ sub DISABLED_handleTitle {
 
 ##############################################################################
 # called before one page is converted
-sub DISABLED_handleBefore {
+sub handleBefore {
   my $converter = shift;
   my $page = shift;
 
-  #$converter->writeDebug("called handleBefore");
+  $converter->writeDebug("called handleBefore");
+
+ return Foswiki::Plugins::MediaWikiTablePlugin::Core::handleMWTable($_[0]);
 }
 
 ##############################################################################
 # called after a page has been converted to a topic
-sub DISABLED_handleAfter {
+sub handleAfter {
   my $converter = shift;
   my $page = shift;
 
   #$converter->writeDebug("called handleAfter");
+
+  my $pageTitle = join('.',$converter->getTitle($page));
+  my $type = "Process description";
+
+  # move h1 to title
+  my $title = '';
+  if ($_[0] =~ s/^\s*---\++(?:!!)?\s*(.*?)\s*$//m) {
+    $title = $1;
+    $title =~ s/\[\[.*?\]\[(.*)\]\]/$1/g;
+  }
+
+  # encode the formfield values
+  my $form = $topicFormTemplate;
+  $form =~ s/%title%/$title/g;
+  $form =~ s/%type%/$type/g;
+  $_[0] .= "\n".$form;
+
 }
 
 ##############################################################################
 # called after all pages have been converted
-sub _handleFinal {
+sub DISABLED_handleFinal {
+
   my $converter = shift;
 
   $converter->writeDebug("called handleFinal");

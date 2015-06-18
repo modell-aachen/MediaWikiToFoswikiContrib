@@ -4,8 +4,10 @@
 #
 # Copy/Rename this file to YourOwnPlugin.pm and rename the package line below
 
-package Foswiki::Contrib::MediaWiki2FoswikiContrib::QwikiConverter;
+package Foswiki::Contrib::MediaWikiToFoswikiContrib::QwikiConverter;
 use strict;
+
+use vars qw($topicFormTemplate);
 
 ##############################################################################
 sub registerHandlers {
