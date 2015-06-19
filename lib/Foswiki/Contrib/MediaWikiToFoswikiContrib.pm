@@ -16,7 +16,7 @@ package Foswiki::Contrib::MediaWikiToFoswikiContrib;
 use strict;
 use vars qw( $VERSION $RELEASE $SHORTDESCRIPTION );
 
-$VERSION = '$Rev$';
+$VERSION = '2.1';
 $RELEASE = '2.1';
 $SHORTDESCRIPTION = 'MediaWiki 2 Foswiki Conversion Tool';
 
